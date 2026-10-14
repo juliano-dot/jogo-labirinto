@@ -277,7 +277,6 @@ function startGame() {
 function resetRun() {
   totalScore = 0;
   scoreRecorded = false;
-  localStorage.removeItem(STORAGE_KEY);
   renderRanking();
   if (gameStarted) {
     startLevel(0);
@@ -404,6 +403,17 @@ function tryMove(dx, dy) {
 }
 
 function handleKeydown(event) {
+  const activeElement = document.activeElement;
+  const isTypingInField =
+    activeElement &&
+    (activeElement.tagName === 'INPUT' ||
+      activeElement.tagName === 'TEXTAREA' ||
+      activeElement.isContentEditable);
+
+  if (isTypingInField || (event.target && (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA' || event.target.isContentEditable))) {
+    return;
+  }
+
   const keyMap = {
     ArrowUp: [0, -1],
     w: [0, -1],

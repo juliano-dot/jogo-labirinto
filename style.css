@@ -8,8 +8,9 @@
   --wall-dark: #0f172a;
   --floor: #dbeafe;
   --player: #facc15;
-  --coin: #fbbf24;
-  --coin-glow: #fde68a;
+  --coin: #ff4db8;
+  --coin-glow: #ffe66d;
+  --coin-shadow: rgba(255, 77, 184, 0.9);
   --exit: #34d399;
   --exit-locked: #64748b;
   --accent: #38bdf8;
@@ -195,11 +196,11 @@ h1 {
 
 .cell.coin::after {
   content: "";
-  width: 52%;
-  height: 52%;
+  width: 56%;
+  height: 56%;
   border-radius: 50%;
-  background: radial-gradient(circle, var(--coin-glow), var(--coin));
-  box-shadow: 0 0 10px rgba(251, 191, 36, 0.9);
+  background: radial-gradient(circle at 30% 30%, #fff7a8 0%, var(--coin-glow) 18%, #ff9a3d 42%, var(--coin) 68%, #8b1e63 100%);
+  box-shadow: 0 0 12px var(--coin-shadow), 0 0 18px rgba(255, 154, 61, 0.8);
 }
 
 .cell.exit-open {
