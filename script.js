@@ -6,8 +6,8 @@ const messageEl = document.getElementById('message');
 const resetBtn = document.getElementById('resetBtn');
 const directionButtons = document.querySelectorAll('.dir-btn');
 
-const MAZE_SIZE = 15;
-const TOTAL_COINS = 5;
+const MAZE_SIZE = 33;
+const TOTAL_COINS = 12;
 
 let maze = [];
 let player = { x: 1, y: 1 };
@@ -55,7 +55,44 @@ function buildMaze() {
     }
   }
 
+  function addExtraRoutes() {
+    const extraRoutes = Math.floor((MAZE_SIZE * MAZE_SIZE) / 8);
+
+    for (let i = 0; i < extraRoutes; i += 1) {
+      const x = 1 + Math.floor(Math.random() * (MAZE_SIZE - 2));
+      const y = 1 + Math.floor(Math.random() * (MAZE_SIZE - 2));
+
+      if (grid[y][x] !== 0) {
+        continue;
+      }
+
+      const directions = shuffle([
+        { x: 2, y: 0 },
+        { x: -2, y: 0 },
+        { x: 0, y: 2 },
+        { x: 0, y: -2 },
+      ]);
+
+      const opened = directions.find(({ x: dx, y: dy }) => {
+        const nx = x + dx;
+        const ny = y + dy;
+
+        if (nx <= 0 || ny <= 0 || nx >= MAZE_SIZE - 1 || ny >= MAZE_SIZE - 1) {
+          return false;
+        }
+
+        return grid[ny][nx] === 1;
+      });
+
+      if (opened) {
+        grid[y + opened.y / 2][x + opened.x / 2] = 0;
+        grid[y + opened.y][x + opened.x] = 0;
+      }
+    }
+  }
+
   carve(1, 1);
+  addExtraRoutes();
 
   const openCells = [];
   for (let y = 1; y < MAZE_SIZE - 1; y += 1) {

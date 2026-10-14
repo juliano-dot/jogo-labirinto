@@ -5,7 +5,7 @@ Este projeto é um jogo de labirinto simples, criado em HTML, CSS e JavaScript p
 ## Como jogar
 
 - Use as setas do teclado ou os botões de direção na tela.
-- Vá coletando as moedas espalhadas pelo labirinto.
+- Vá coletando as moedas espalhadas pelo labirinto maior e mais confuso.
 - Quando todas as moedas forem coletadas, a saída fica liberada.
 - Chegue até a saída para vencer.
 
