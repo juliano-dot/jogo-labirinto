@@ -258,6 +258,8 @@ function startLevel(levelNumber) {
 function resetRun() {
   totalScore = 0;
   scoreRecorded = false;
+  localStorage.removeItem(STORAGE_KEY);
+  renderRanking();
   startLevel(0);
 }
 
@@ -339,7 +341,8 @@ function completeLevel() {
     setMessage(`Nível ${levelIndex + 1} concluído! +${pointsEarned} pontos. Próximo mapa...`);
     continueToNextLevel();
   } else {
-    saveRanking(totalScore);
+    localStorage.removeItem(STORAGE_KEY);
+    renderRanking();
     setMessage(`Parabéns! Você venceu todos os níveis em ${moves} movimentos. Pontos: ${totalScore}.`);
   }
 }
