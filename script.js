@@ -5,10 +5,10 @@ const movesEl = document.getElementById('moves');
 const levelCountEl = document.getElementById('levelCount');
 const scoreCountEl = document.getElementById('scoreCount');
 const messageEl = document.getElementById('message');
-const startBtn = document.getElementById('startBtn');
+const overlayStartBtn = document.getElementById('overlayStartBtn');
 const resetBtn = document.getElementById('resetBtn');
 const directionButtons = document.querySelectorAll('.dir-btn');
-const playerNameEl = document.getElementById('playerName');
+const overlayPlayerNameEl = document.getElementById('overlayPlayerName');
 const rankingListEl = document.getElementById('rankingList');
 const clearRankingBtn = document.getElementById('clearRankingBtn');
 const startOverlayEl = document.getElementById('startOverlay');
@@ -19,6 +19,9 @@ const LEVELS = [
   { size: 19, coins: 7 },
   { size: 23, coins: 9 },
   { size: 27, coins: 12 },
+  { size: 31, coins: 15 },
+  { size: 35, coins: 18 },
+  { size: 39, coins: 21 },
 ];
 
 const STORAGE_KEY = 'labirinto-ranking';
@@ -62,12 +65,21 @@ function loadRanking() {
   }
 }
 
+function getPlayerName() {
+  return overlayPlayerNameEl.value.trim();
+}
+
+function isCompleteName(value) {
+  const trimmed = value.trim();
+  return trimmed.length > 0;
+}
+
 function saveRanking(scoreValue) {
   if (!scoreValue || scoreValue <= 0 || scoreRecorded) {
     return;
   }
 
-  const playerName = playerNameEl.value.trim() || 'Jogador';
+  const playerName = getPlayerName() || 'Jogador';
   const ranking = loadRanking();
   const updated = [...ranking, { name: playerName, score: scoreValue }]
     .sort((a, b) => b.score - a.score)
@@ -259,12 +271,12 @@ function startLevel(levelNumber) {
 }
 
 function canStartGame() {
-  return playerNameEl.value.trim().length > 0;
+  return isCompleteName(getPlayerName());
 }
 
 function updateStartLock() {
   const needsName = !canStartGame() && !gameStarted;
-  startBtn.disabled = !canStartGame();
+  overlayStartBtn.disabled = !canStartGame();
   startOverlayEl.classList.toggle('visible', needsName);
 
   if (needsName) {
@@ -275,13 +287,13 @@ function updateStartLock() {
 function startGame() {
   if (!canStartGame()) {
     setMessage('Digite seu nome antes de começar o jogo.');
-    playerNameEl.focus();
+    overlayPlayerNameEl.focus();
     return;
   }
 
   gameStarted = true;
-  startBtn.disabled = true;
-  playerNameEl.setAttribute('readonly', 'readonly');
+  overlayStartBtn.disabled = true;
+  overlayPlayerNameEl.setAttribute('readonly', 'readonly');
   startOverlayEl.classList.remove('visible');
   resetRun();
 }
@@ -454,43 +466,41 @@ function handleKeydown(event) {
 resetBtn.addEventListener('click', () => {
   if (!canStartGame()) {
     gameStarted = false;
-    startBtn.disabled = true;
-    playerNameEl.removeAttribute('readonly');
+    overlayPlayerNameEl.removeAttribute('readonly');
     startOverlayEl.classList.add('visible');
     setMessage('Digite seu nome para liberar o jogo.');
-    playerNameEl.focus();
+    overlayPlayerNameEl.focus();
     return;
   }
 
   gameStarted = true;
-  startBtn.disabled = true;
-  playerNameEl.setAttribute('readonly', 'readonly');
+  overlayStartBtn.disabled = true;
+  overlayPlayerNameEl.setAttribute('readonly', 'readonly');
   startOverlayEl.classList.remove('visible');
   resetRun();
 });
-
-startBtn.addEventListener('click', startGame);
 
 clearRankingBtn.addEventListener('click', () => {
   localStorage.removeItem(STORAGE_KEY);
   renderRanking();
 });
 
-playerNameEl.addEventListener('input', () => {
+overlayPlayerNameEl.addEventListener('input', () => {
   const hasName = canStartGame();
-  startBtn.disabled = !hasName;
+  overlayStartBtn.disabled = !hasName;
   renderRanking();
 
   if (!gameStarted) {
     if (hasName) {
-      startOverlayEl.classList.remove('visible');
-      setMessage('Nome pronto! Clique em Iniciar jogo.');
+      setMessage('Seu nome está pronto. Clique em Iniciar jogo.');
     } else {
       startOverlayEl.classList.add('visible');
       setMessage('Digite seu nome para liberar a partida.');
     }
   }
 });
+
+overlayStartBtn.addEventListener('click', startGame);
 
 directionButtons.forEach((button) => {
   button.addEventListener('click', () => {
@@ -509,7 +519,7 @@ directionButtons.forEach((button) => {
 
 window.addEventListener('keydown', handleKeydown);
 
-startBtn.disabled = true;
+overlayStartBtn.disabled = true;
 renderRanking();
 updateStartLock();
 setMessage('Digite seu nome e clique em Iniciar jogo.');

@@ -15,11 +15,6 @@
         </div>
 
         <div class="top-actions">
-          <label class="name-field" for="playerName">
-            <span>Jogador</span>
-            <input id="playerName" type="text" maxlength="12" placeholder="Digite seu nome" />
-          </label>
-          <button id="startBtn" class="start-btn" type="button">Iniciar jogo</button>
           <button id="resetBtn" class="reset-btn">Reiniciar</button>
         </div>
       </header>
@@ -54,6 +49,15 @@
             <div class="lock-icon">🔒</div>
             <h2>Jogo bloqueado</h2>
             <p>Digite seu nome para liberar o labirinto e começar a jogar.</p>
+
+            <label class="lock-name-field" for="overlayPlayerName">
+              <span>Nome do jogador</span>
+              <input id="overlayPlayerName" type="text" maxlength="12" placeholder="Digite seu nome" />
+            </label>
+
+            <button id="overlayStartBtn" class="start-btn lock-start-btn" type="button" disabled>
+              Iniciar
+            </button>
           </div>
         </div>
       </div>

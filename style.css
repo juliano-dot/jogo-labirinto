@@ -54,25 +54,6 @@ body {
   flex-wrap: wrap;
 }
 
-.name-field {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  color: var(--muted);
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-.name-field input {
-  border: 1px solid rgba(148, 163, 184, 0.35);
-  border-radius: 10px;
-  background: rgba(15, 23, 42, 0.8);
-  color: var(--text);
-  padding: 8px 10px;
-  min-width: 120px;
-}
-
 .eyebrow {
   margin: 0 0 4px;
   font-size: 0.7rem;
@@ -183,6 +164,10 @@ h1 {
 
 .lock-card {
   width: min(80%, 320px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
   text-align: center;
   background: rgba(15, 23, 42, 0.95);
   border: 1px solid rgba(96, 165, 250, 0.7);
@@ -193,11 +178,11 @@ h1 {
 
 .lock-icon {
   font-size: 2.7rem;
-  margin-bottom: 10px;
+  margin-bottom: 0;
 }
 
 .lock-card h2 {
-  margin: 0 0 10px;
+  margin: 0;
   font-size: 1.3rem;
   color: #f8fafc;
 }
@@ -206,6 +191,31 @@ h1 {
   margin: 0;
   color: #cbd5e1;
   line-height: 1.5;
+}
+
+.lock-name-field {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.lock-name-field input {
+  width: 100%;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.8);
+  color: var(--text);
+  padding: 10px 12px;
+}
+
+.lock-start-btn {
+  width: 100%;
 }
 
 .cell {
