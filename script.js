@@ -9,6 +9,7 @@ const resetBtn = document.getElementById('resetBtn');
 const directionButtons = document.querySelectorAll('.dir-btn');
 const playerNameEl = document.getElementById('playerName');
 const rankingListEl = document.getElementById('rankingList');
+const clearRankingBtn = document.getElementById('clearRankingBtn');
 
 const LEVELS = [
   { size: 11, coins: 3 },
@@ -34,6 +35,7 @@ let elapsedSeconds = 0;
 let timerId = null;
 let gameWon = false;
 let transitioning = false;
+let scoreRecorded = false;
 
 function shuffle(items) {
   const copy = [...items];
@@ -58,6 +60,10 @@ function loadRanking() {
 }
 
 function saveRanking(scoreValue) {
+  if (!scoreValue || scoreValue <= 0 || scoreRecorded) {
+    return;
+  }
+
   const playerName = playerNameEl.value.trim() || 'Jogador';
   const ranking = loadRanking();
   const updated = [...ranking, { name: playerName, score: scoreValue }]
@@ -66,6 +72,7 @@ function saveRanking(scoreValue) {
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
   renderRanking(updated);
+  scoreRecorded = true;
 }
 
 function renderRanking(data = loadRanking()) {
@@ -250,6 +257,7 @@ function startLevel(levelNumber) {
 
 function resetRun() {
   totalScore = 0;
+  scoreRecorded = false;
   startLevel(0);
 }
 
@@ -325,13 +333,13 @@ function completeLevel() {
 
   const pointsEarned = giveLevelPoints();
   totalScore += pointsEarned;
-  saveRanking(totalScore);
   updateHud();
 
   if (levelIndex < LEVELS.length - 1) {
     setMessage(`Nível ${levelIndex + 1} concluído! +${pointsEarned} pontos. Próximo mapa...`);
     continueToNextLevel();
   } else {
+    saveRanking(totalScore);
     setMessage(`Parabéns! Você venceu todos os níveis em ${moves} movimentos. Pontos: ${totalScore}.`);
   }
 }
@@ -396,6 +404,11 @@ function handleKeydown(event) {
 }
 
 resetBtn.addEventListener('click', resetRun);
+
+clearRankingBtn.addEventListener('click', () => {
+  localStorage.removeItem(STORAGE_KEY);
+  renderRanking();
+});
 
 playerNameEl.addEventListener('input', () => {
   renderRanking();

@@ -255,12 +255,30 @@ h1 {
   padding: 14px 16px;
 }
 
+.ranking-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
 .ranking-card h2 {
-  margin: 0 0 10px;
+  margin: 0;
   font-size: 1rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--muted);
+}
+
+.clear-ranking-btn {
+  border: none;
+  border-radius: 8px;
+  background: rgba(239, 68, 68, 0.15);
+  color: #fecaca;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-weight: 700;
 }
 
 .ranking-list {
