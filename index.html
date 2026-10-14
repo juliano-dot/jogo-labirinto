@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Labirinto Mágico</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Desafio</p>
+          <h1>Labirinto Mágico</h1>
+        </div>
+        <button id="resetBtn" class="reset-btn">Reiniciar</button>
+      </header>
+
+      <section class="hud" aria-label="Estatísticas do jogo">
+        <div class="hud-item">
+          <span>Moedas</span>
+          <strong id="coinCount">0/0</strong>
+        </div>
+        <div class="hud-item">
+          <span>Tempo</span>
+          <strong id="timer">00:00</strong>
+        </div>
+        <div class="hud-item">
+          <span>Movimentos</span>
+          <strong id="moves">0</strong>
+        </div>
+      </section>
+
+      <div id="gameBoard" class="board" aria-label="Tabuleiro do labirinto"></div>
+
+      <div class="controls" aria-label="Controles de direção">
+        <button class="dir-btn" data-dir="up" aria-label="Mover para cima">↑</button>
+        <div class="controls-row">
+          <button class="dir-btn" data-dir="left" aria-label="Mover para esquerda">←</button>
+          <button class="dir-btn" data-dir="down" aria-label="Mover para baixo">↓</button>
+          <button class="dir-btn" data-dir="right" aria-label="Mover para direita">→</button>
+        </div>
+      </div>
+
+      <p id="message" class="message">Colete todas as moedas e encontre a saída!</p>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
