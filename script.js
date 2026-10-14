@@ -341,8 +341,7 @@ function completeLevel() {
     setMessage(`Nível ${levelIndex + 1} concluído! +${pointsEarned} pontos. Próximo mapa...`);
     continueToNextLevel();
   } else {
-    localStorage.removeItem(STORAGE_KEY);
-    renderRanking();
+    saveRanking(totalScore);
     setMessage(`Parabéns! Você venceu todos os níveis em ${moves} movimentos. Pontos: ${totalScore}.`);
   }
 }
