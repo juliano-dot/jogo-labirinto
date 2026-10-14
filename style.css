@@ -8,7 +8,6 @@
   --wall-dark: #0f172a;
   --floor: #dbeafe;
   --player: #facc15;
-  --player-shadow: #f59e0b;
   --coin: #fbbf24;
   --coin-glow: #fde68a;
   --exit: #34d399;
@@ -31,7 +30,7 @@ body {
 }
 
 .app {
-  width: min(92vw, 560px);
+  width: min(92vw, 720px);
   background: rgba(15, 23, 42, 0.82);
   border: 1px solid var(--panel-border);
   border-radius: 20px;
@@ -42,9 +41,35 @@ body {
 .topbar {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
   gap: 12px;
   margin-bottom: 16px;
+}
+
+.top-actions {
+  display: flex;
+  align-items: end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.name-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--muted);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.name-field input {
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.8);
+  color: var(--text);
+  padding: 8px 10px;
+  min-width: 120px;
 }
 
 .eyebrow {
@@ -78,7 +103,7 @@ h1 {
 
 .hud {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 10px;
   margin-bottom: 16px;
 }
@@ -102,13 +127,13 @@ h1 {
 }
 
 .hud-item strong {
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 .board {
   display: grid;
   gap: 3px;
-  width: min(100%, 460px);
+  width: min(100%, 540px);
   aspect-ratio: 1;
   margin: 0 auto;
   background: rgba(15, 23, 42, 0.9);
@@ -219,12 +244,63 @@ h1 {
   transform: translateY(-1px);
 }
 
+.status-row {
+  margin-top: 16px;
+}
+
+.ranking-card {
+  background: rgba(30, 41, 59, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  border-radius: 14px;
+  padding: 14px 16px;
+}
+
+.ranking-card h2 {
+  margin: 0 0 10px;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.ranking-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.ranking-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.5);
+}
+
 .message {
   margin: 18px 0 0;
   text-align: center;
   color: var(--muted);
   min-height: 24px;
   font-size: 1rem;
+}
+
+@media (max-width: 620px) {
+  .topbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .top-actions {
+    justify-content: space-between;
+  }
+
+  .hud {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 520px) {
@@ -237,7 +313,7 @@ h1 {
   }
 
   .hud-item strong {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
   }
 
   .dir-btn {

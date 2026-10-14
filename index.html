@@ -13,7 +13,14 @@
           <p class="eyebrow">Desafio</p>
           <h1>Labirinto Mágico</h1>
         </div>
-        <button id="resetBtn" class="reset-btn">Reiniciar</button>
+
+        <div class="top-actions">
+          <label class="name-field" for="playerName">
+            <span>Jogador</span>
+            <input id="playerName" type="text" maxlength="12" value="Jogador" />
+          </label>
+          <button id="resetBtn" class="reset-btn">Reiniciar</button>
+        </div>
       </header>
 
       <section class="hud" aria-label="Estatísticas do jogo">
@@ -29,6 +36,14 @@
           <span>Movimentos</span>
           <strong id="moves">0</strong>
         </div>
+        <div class="hud-item">
+          <span>Nível</span>
+          <strong id="levelCount">1/5</strong>
+        </div>
+        <div class="hud-item">
+          <span>Pontos</span>
+          <strong id="scoreCount">0</strong>
+        </div>
       </section>
 
       <div id="gameBoard" class="board" aria-label="Tabuleiro do labirinto"></div>
@@ -39,6 +54,13 @@
           <button class="dir-btn" data-dir="left" aria-label="Mover para esquerda">←</button>
           <button class="dir-btn" data-dir="down" aria-label="Mover para baixo">↓</button>
           <button class="dir-btn" data-dir="right" aria-label="Mover para direita">→</button>
+        </div>
+      </div>
+
+      <div class="status-row">
+        <div class="ranking-card">
+          <h2>Ranking</h2>
+          <ol id="rankingList" class="ranking-list"></ol>
         </div>
       </div>
 
