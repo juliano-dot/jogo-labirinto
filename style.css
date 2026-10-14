@@ -85,20 +85,37 @@ h1 {
   font-size: clamp(1.8rem, 5vw, 2.3rem);
 }
 
+.start-btn,
 .reset-btn {
   border: none;
   border-radius: 10px;
   padding: 10px 14px;
-  background: linear-gradient(135deg, var(--accent), #2563eb);
-  color: white;
   font-size: 0.95rem;
   font-weight: 700;
   cursor: pointer;
-  transition: transform 0.15s ease;
+  transition: transform 0.15s ease, opacity 0.2s ease;
 }
 
+.start-btn {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: white;
+}
+
+.reset-btn {
+  background: linear-gradient(135deg, var(--accent), #2563eb);
+  color: white;
+}
+
+.start-btn:hover,
 .reset-btn:hover {
   transform: translateY(-1px);
+}
+
+.start-btn:disabled,
+.reset-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
 }
 
 .hud {

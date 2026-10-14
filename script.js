@@ -5,6 +5,7 @@ const movesEl = document.getElementById('moves');
 const levelCountEl = document.getElementById('levelCount');
 const scoreCountEl = document.getElementById('scoreCount');
 const messageEl = document.getElementById('message');
+const startBtn = document.getElementById('startBtn');
 const resetBtn = document.getElementById('resetBtn');
 const directionButtons = document.querySelectorAll('.dir-btn');
 const playerNameEl = document.getElementById('playerName');
@@ -36,6 +37,7 @@ let timerId = null;
 let gameWon = false;
 let transitioning = false;
 let scoreRecorded = false;
+let gameStarted = false;
 
 function shuffle(items) {
   const copy = [...items];
@@ -255,12 +257,33 @@ function startLevel(levelNumber) {
   startTimer();
 }
 
+function canStartGame() {
+  return playerNameEl.value.trim().length > 0;
+}
+
+function startGame() {
+  if (!canStartGame()) {
+    setMessage('Digite seu nome antes de começar o jogo.');
+    playerNameEl.focus();
+    return;
+  }
+
+  gameStarted = true;
+  startBtn.disabled = true;
+  playerNameEl.setAttribute('readonly', 'readonly');
+  resetRun();
+}
+
 function resetRun() {
   totalScore = 0;
   scoreRecorded = false;
   localStorage.removeItem(STORAGE_KEY);
   renderRanking();
-  startLevel(0);
+  if (gameStarted) {
+    startLevel(0);
+  } else {
+    setMessage('Digite seu nome e clique em Iniciar jogo.');
+  }
 }
 
 function isWall(x, y) {
@@ -347,7 +370,7 @@ function completeLevel() {
 }
 
 function tryMove(dx, dy) {
-  if (gameWon || transitioning) {
+  if (!gameStarted || gameWon || transitioning) {
     return;
   }
 
@@ -405,7 +428,17 @@ function handleKeydown(event) {
   tryMove(dx, dy);
 }
 
-resetBtn.addEventListener('click', resetRun);
+resetBtn.addEventListener('click', () => {
+  gameStarted = false;
+  startBtn.disabled = !canStartGame();
+  playerNameEl.removeAttribute('readonly');
+  if (!canStartGame()) {
+    setMessage('Digite seu nome antes de começar o jogo.');
+  }
+  resetRun();
+});
+
+startBtn.addEventListener('click', startGame);
 
 clearRankingBtn.addEventListener('click', () => {
   localStorage.removeItem(STORAGE_KEY);
@@ -413,7 +446,12 @@ clearRankingBtn.addEventListener('click', () => {
 });
 
 playerNameEl.addEventListener('input', () => {
+  const hasName = canStartGame();
+  startBtn.disabled = !hasName;
   renderRanking();
+  if (hasName && !gameStarted) {
+    setMessage('Nome pronto! Clique em Iniciar jogo.');
+  }
 });
 
 directionButtons.forEach((button) => {
@@ -433,5 +471,7 @@ directionButtons.forEach((button) => {
 
 window.addEventListener('keydown', handleKeydown);
 
+startBtn.disabled = true;
 renderRanking();
-resetRun();
+setMessage('Digite seu nome e clique em Iniciar jogo.');
+renderBoard();
