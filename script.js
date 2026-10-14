@@ -452,12 +452,20 @@ function handleKeydown(event) {
 }
 
 resetBtn.addEventListener('click', () => {
-  gameStarted = false;
-  startBtn.disabled = !canStartGame();
-  playerNameEl.removeAttribute('readonly');
   if (!canStartGame()) {
-    setMessage('Digite seu nome antes de começar o jogo.');
+    gameStarted = false;
+    startBtn.disabled = true;
+    playerNameEl.removeAttribute('readonly');
+    startOverlayEl.classList.add('visible');
+    setMessage('Digite seu nome para liberar o jogo.');
+    playerNameEl.focus();
+    return;
   }
+
+  gameStarted = true;
+  startBtn.disabled = true;
+  playerNameEl.setAttribute('readonly', 'readonly');
+  startOverlayEl.classList.remove('visible');
   resetRun();
 });
 
@@ -473,12 +481,14 @@ playerNameEl.addEventListener('input', () => {
   startBtn.disabled = !hasName;
   renderRanking();
 
-  if (hasName && !gameStarted) {
-    startOverlayEl.classList.remove('visible');
-    setMessage('Nome pronto! Clique em Iniciar jogo.');
-  } else if (!gameStarted) {
-    startOverlayEl.classList.add('visible');
-    setMessage('Digite seu nome para liberar a partida.');
+  if (!gameStarted) {
+    if (hasName) {
+      startOverlayEl.classList.remove('visible');
+      setMessage('Nome pronto! Clique em Iniciar jogo.');
+    } else {
+      startOverlayEl.classList.add('visible');
+      setMessage('Digite seu nome para liberar a partida.');
+    }
   }
 });
 
