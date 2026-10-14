@@ -148,16 +148,64 @@ h1 {
   font-size: 1rem;
 }
 
+.board-wrap {
+  position: relative;
+  width: min(100%, 540px);
+  margin: 0 auto;
+}
+
 .board {
   display: grid;
   gap: 3px;
-  width: min(100%, 540px);
+  width: 100%;
   aspect-ratio: 1;
-  margin: 0 auto;
   background: rgba(15, 23, 42, 0.9);
   border: 1px solid rgba(148, 163, 184, 0.3);
   border-radius: 12px;
   padding: 8px;
+}
+
+.start-overlay {
+  position: absolute;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(2, 6, 23, 0.72);
+  border-radius: 12px;
+  backdrop-filter: blur(3px);
+  z-index: 10;
+}
+
+.start-overlay.visible {
+  display: flex;
+}
+
+.lock-card {
+  width: min(80%, 320px);
+  text-align: center;
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid rgba(96, 165, 250, 0.7);
+  border-radius: 18px;
+  padding: 22px 18px;
+  box-shadow: 0 20px 35px rgba(15, 23, 42, 0.45);
+}
+
+.lock-icon {
+  font-size: 2.7rem;
+  margin-bottom: 10px;
+}
+
+.lock-card h2 {
+  margin: 0 0 10px;
+  font-size: 1.3rem;
+  color: #f8fafc;
+}
+
+.lock-card p {
+  margin: 0;
+  color: #cbd5e1;
+  line-height: 1.5;
 }
 
 .cell {

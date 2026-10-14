@@ -47,7 +47,16 @@
         </div>
       </section>
 
-      <div id="gameBoard" class="board" aria-label="Tabuleiro do labirinto"></div>
+      <div class="board-wrap">
+        <div id="gameBoard" class="board" aria-label="Tabuleiro do labirinto"></div>
+        <div id="startOverlay" class="start-overlay visible" aria-live="polite">
+          <div class="lock-card">
+            <div class="lock-icon">🔒</div>
+            <h2>Jogo bloqueado</h2>
+            <p>Digite seu nome para liberar o labirinto e começar a jogar.</p>
+          </div>
+        </div>
+      </div>
 
       <div class="controls" aria-label="Controles de direção">
         <button class="dir-btn" data-dir="up" aria-label="Mover para cima">↑</button>

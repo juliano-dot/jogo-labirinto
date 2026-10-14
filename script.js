@@ -11,6 +11,7 @@ const directionButtons = document.querySelectorAll('.dir-btn');
 const playerNameEl = document.getElementById('playerName');
 const rankingListEl = document.getElementById('rankingList');
 const clearRankingBtn = document.getElementById('clearRankingBtn');
+const startOverlayEl = document.getElementById('startOverlay');
 
 const LEVELS = [
   { size: 11, coins: 3 },
@@ -261,6 +262,16 @@ function canStartGame() {
   return playerNameEl.value.trim().length > 0;
 }
 
+function updateStartLock() {
+  const needsName = !canStartGame() && !gameStarted;
+  startBtn.disabled = !canStartGame();
+  startOverlayEl.classList.toggle('visible', needsName);
+
+  if (needsName) {
+    setMessage('Digite seu nome para liberar a partida.');
+  }
+}
+
 function startGame() {
   if (!canStartGame()) {
     setMessage('Digite seu nome antes de começar o jogo.');
@@ -271,6 +282,7 @@ function startGame() {
   gameStarted = true;
   startBtn.disabled = true;
   playerNameEl.setAttribute('readonly', 'readonly');
+  startOverlayEl.classList.remove('visible');
   resetRun();
 }
 
@@ -282,6 +294,7 @@ function resetRun() {
     startLevel(0);
   } else {
     setMessage('Digite seu nome e clique em Iniciar jogo.');
+    updateStartLock();
   }
 }
 
@@ -459,8 +472,13 @@ playerNameEl.addEventListener('input', () => {
   const hasName = canStartGame();
   startBtn.disabled = !hasName;
   renderRanking();
+
   if (hasName && !gameStarted) {
+    startOverlayEl.classList.remove('visible');
     setMessage('Nome pronto! Clique em Iniciar jogo.');
+  } else if (!gameStarted) {
+    startOverlayEl.classList.add('visible');
+    setMessage('Digite seu nome para liberar a partida.');
   }
 });
 
@@ -483,5 +501,6 @@ window.addEventListener('keydown', handleKeydown);
 
 startBtn.disabled = true;
 renderRanking();
+updateStartLock();
 setMessage('Digite seu nome e clique em Iniciar jogo.');
 renderBoard();
